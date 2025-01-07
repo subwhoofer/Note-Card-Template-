@@ -1,88 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <title>Vocab Template</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
 
-   <title>Vocab Template</title>
-   <style>
-       body {
-           background-color: #f4f4f4;
-           margin: 0;
-           padding: 0;
-       }
-       .flashcard {
-           max-width: 600px;
-           margin: 20px auto;
-           padding: 20px;
-           background: white;
-           border: 2px solid #ddd;
-           border-radius: 10px;
-           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-           text-align: center;
-       }
-       .term {
-           font-size: 24px;
-           font-weight: bold;
-       }
-       .definition {
-           margin-top: 15px;
-           display: none;
-           font-size: 18px;
-       }
-       button {
-           margin: 10px 5px;
-           padding: 10px 20px;
-           font-size: 16px;
-           background-color: #007bff;
-           color: white;
-           border: none;
-           border-radius: 5px;
-           cursor: pointer;
-       }
-       button:hover {
-           background-color: #0056b3;
-       }
-   </style>
-</head>
-<body>
+        width: 100vw;
+        height: 95vh;
 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .flashcard {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+
+        aspect-ratio: 5/3;
+      }
+      .term {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .definition {
+        margin-top: 15px;
+        display: none;
+        font-size: 18px;
+      }
+      button {
+        margin: 10px 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .github{
+        position: absolute;
+        width: 100vw;
+        text-align: center;
+        color: darkgray;
+        bottom: 1vh;
+      }
+
+      .help{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 2.5vw;
+        height: 2.5vw;
+        margin: 1vw;
+        background-color: rgb(211, 211, 211);
+        color: white;
+        font-size: 2vw;
+        border-radius: 999px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+      }
+      .help:hover{
+        transform: scale(102%);
+        background-color: rgb(184, 184, 184);
+      }
+
+    </style>
+  </head>
+  <body>
     <div class="flashcard">
-       <div class="term" id="term"></div>
-       <div class="definition" id="definition"></div>
-       <button onclick="toggleDefinition()">Show Definition</button>
-       <button onclick="nextCard()">Next</button>
-       <button onclick="shuffleCards()">Shuffle</button>
+      <div class="term" id="term"></div>
+
+      <button onclick="toggleDefinition()">Show Definition</button>
+      <button onclick="nextCard()">Next</button>
+      <button onclick="shuffleCards()">Shuffle</button>
+
+      <div class="definition" id="definition"></div>
     </div>
+    <div class="help" onclick="help()">
+        ?
+    </div>
+    <a href="https://github.com/subwhoofer/Note-Card-Template-" class="github" target="_blank">Github</a>
+    <script>
+      const flashcards = [
+        // PUT OTHER FLASH CARDS HERE //
+        { term: "Flashcard Template", definition: "Best template ever" }, // Replace This
+        { term: "TEST 123", definition: "test !@#" }, // Replace This
+      ];
 
-<script>
-   const flashcards = [
-       { term: "Flashcard Template", definition: "Best template ever" },
-   ];
+      let currentIndex = -1;
 
-   let currentIndex = -1;
+      function help(){
+        // Show Keybids
+      }
 
-   function toggleDefinition() {
-       const definition = document.getElementById('definition');
-       definition.style.display = definition.style.display === "none" ? "block" : "none";
-   }
+      // Keyboard input
+      document.body.addEventListener("keydown", function (event) {
+        if (event.key === " ") {
+            toggleDefinition();
+        }else if(event.key === "Enter"){
+            nextCard();
+        }else if(event.key === "s"){
+            shuffleCards();
+        }
+      });
 
-   function nextCard() {
-       currentIndex = (currentIndex + 1) % flashcards.length;
-       displayCard();
-   }
+      function toggleDefinition() {
+        const definition = document.getElementById("definition");
+        definition.style.display =
+          definition.style.display === "none" ? "block" : "none";
+      }
 
-   function shuffleCards() {
-       flashcards.sort(() => Math.random() - 0.5);
-       currentIndex = 0;
-       displayCard();
-   }
+      function nextCard() {
+        currentIndex = (currentIndex + 1) % flashcards.length;
+        displayCard();
+      }
 
-   function displayCard() {
-       const termElement = document.getElementById('term');
-       const definitionElement = document.getElementById('definition');
-       termElement.innerText = flashcards[currentIndex].term;
-       definitionElement.innerText = flashcards[currentIndex].definition;
-       definitionElement.style.display = "none";
-   }
-</script>
-</body>
+      function shuffleCards() {
+        flashcards.sort(() => Math.random() - 0.5);
+        currentIndex = 0;
+        displayCard();
+      }
+
+      function displayCard() {
+        const termElement = document.getElementById("term");
+        const definitionElement = document.getElementById("definition");
+        termElement.innerText = flashcards[currentIndex].term;
+        definitionElement.innerText = flashcards[currentIndex].definition;
+        definitionElement.style.display = "none";
+      }
+
+
+      // Pulls first Card
+      nextCard();
+    </script>
+  </body>
 </html>
